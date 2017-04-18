@@ -30,6 +30,7 @@
         {
             this.btnConnect = new System.Windows.Forms.Button();
             this.txtMessages = new System.Windows.Forms.TextBox();
+            this.btnOrder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -40,6 +41,7 @@
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // txtMessages
             // 
@@ -49,15 +51,27 @@
             this.txtMessages.Size = new System.Drawing.Size(733, 157);
             this.txtMessages.TabIndex = 1;
             // 
+            // btnOrder
+            // 
+            this.btnOrder.Location = new System.Drawing.Point(93, 12);
+            this.btnOrder.Name = "btnOrder";
+            this.btnOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnOrder.TabIndex = 2;
+            this.btnOrder.Text = "Order";
+            this.btnOrder.UseVisualStyleBackColor = true;
+            this.btnOrder.Click += new System.EventHandler(this.btnOrder_Click);
+            // 
             // MainGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(757, 261);
+            this.Controls.Add(this.btnOrder);
             this.Controls.Add(this.txtMessages);
             this.Controls.Add(this.btnConnect);
             this.Name = "MainGUI";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainGUI_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -67,6 +81,7 @@
 
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.TextBox txtMessages;
+        private System.Windows.Forms.Button btnOrder;
     }
 }
 
