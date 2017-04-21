@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EWrapperImpl.cs" />
+    <Compile Include="Common\GlobalValues.cs" />
+    <Compile Include="db\DBUtils.cs" />
+    <Compile Include="Responder.cs" />
     <Compile Include="GatewayCredentials.cs" />
     <Compile Include="IBClient.cs" />
     <Compile Include="MainGUI.cs">

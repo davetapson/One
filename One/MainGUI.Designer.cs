@@ -31,6 +31,10 @@
             this.btnConnect = new System.Windows.Forms.Button();
             this.txtMessages = new System.Windows.Forms.TextBox();
             this.btnOrder = new System.Windows.Forms.Button();
+            this.btnOrderLimit = new System.Windows.Forms.Button();
+            this.btnOrderMKTShort = new System.Windows.Forms.Button();
+            this.btnOrderLMTShort = new System.Windows.Forms.Button();
+            this.btnTestDB = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -57,15 +61,59 @@
             this.btnOrder.Name = "btnOrder";
             this.btnOrder.Size = new System.Drawing.Size(75, 23);
             this.btnOrder.TabIndex = 2;
-            this.btnOrder.Text = "Order";
+            this.btnOrder.Text = "Order MKT";
             this.btnOrder.UseVisualStyleBackColor = true;
             this.btnOrder.Click += new System.EventHandler(this.btnOrder_Click);
+            // 
+            // btnOrderLimit
+            // 
+            this.btnOrderLimit.Location = new System.Drawing.Point(93, 41);
+            this.btnOrderLimit.Name = "btnOrderLimit";
+            this.btnOrderLimit.Size = new System.Drawing.Size(75, 23);
+            this.btnOrderLimit.TabIndex = 3;
+            this.btnOrderLimit.Text = "Order LMT";
+            this.btnOrderLimit.UseVisualStyleBackColor = true;
+            this.btnOrderLimit.Click += new System.EventHandler(this.btnOrderLimit_Click);
+            // 
+            // btnOrderMKTShort
+            // 
+            this.btnOrderMKTShort.Location = new System.Drawing.Point(174, 12);
+            this.btnOrderMKTShort.Name = "btnOrderMKTShort";
+            this.btnOrderMKTShort.Size = new System.Drawing.Size(97, 23);
+            this.btnOrderMKTShort.TabIndex = 4;
+            this.btnOrderMKTShort.Text = "Order MKT Short";
+            this.btnOrderMKTShort.UseVisualStyleBackColor = true;
+            this.btnOrderMKTShort.Click += new System.EventHandler(this.btnOrderMKTShort_Click);
+            // 
+            // btnOrderLMTShort
+            // 
+            this.btnOrderLMTShort.Location = new System.Drawing.Point(175, 40);
+            this.btnOrderLMTShort.Name = "btnOrderLMTShort";
+            this.btnOrderLMTShort.Size = new System.Drawing.Size(96, 23);
+            this.btnOrderLMTShort.TabIndex = 5;
+            this.btnOrderLMTShort.Text = "Order LMT Short";
+            this.btnOrderLMTShort.UseVisualStyleBackColor = true;
+            this.btnOrderLMTShort.Click += new System.EventHandler(this.btnOrderLMTShort_Click);
+            // 
+            // btnTestDB
+            // 
+            this.btnTestDB.Location = new System.Drawing.Point(277, 12);
+            this.btnTestDB.Name = "btnTestDB";
+            this.btnTestDB.Size = new System.Drawing.Size(75, 23);
+            this.btnTestDB.TabIndex = 6;
+            this.btnTestDB.Text = "Test DB";
+            this.btnTestDB.UseVisualStyleBackColor = true;
+            this.btnTestDB.Click += new System.EventHandler(this.btnTestDB_Click);
             // 
             // MainGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(757, 261);
+            this.Controls.Add(this.btnTestDB);
+            this.Controls.Add(this.btnOrderLMTShort);
+            this.Controls.Add(this.btnOrderMKTShort);
+            this.Controls.Add(this.btnOrderLimit);
             this.Controls.Add(this.btnOrder);
             this.Controls.Add(this.txtMessages);
             this.Controls.Add(this.btnConnect);
@@ -82,6 +130,10 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.TextBox txtMessages;
         private System.Windows.Forms.Button btnOrder;
+        private System.Windows.Forms.Button btnOrderLimit;
+        private System.Windows.Forms.Button btnOrderMKTShort;
+        private System.Windows.Forms.Button btnOrderLMTShort;
+        private System.Windows.Forms.Button btnTestDB;
     }
 }
 

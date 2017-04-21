@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IBApi;
+using One.db;
 
 namespace One
 {
@@ -15,6 +16,10 @@ namespace One
     {
         Manager manager;
         GatewayCredentials gatewayCredentials;
+        enum OrderType { MKT, LMT}
+        enum OrderSide { BOT, SLD}
+        enum OrderAction { BUY, SELL, SSHORT}
+        enum TimeInForce { DAY, GTC, IOC, GTD, OPG, FOK, DTC}
 
         public MainGUI()
         {
@@ -31,6 +36,7 @@ namespace One
         {
             manager.Connect();
             manager.SubscribeAccount("DU271448");
+            //manager.GetAccountPosition();
             manager.RequestThisClientsOpenOrders(gatewayCredentials.ClientId);
         }
 
@@ -51,23 +57,72 @@ namespace One
 
         private void btnOrder_Click(object sender, EventArgs e)
         {
-            MakeOrder();
+            MakeOrder(OrderType.MKT, OrderAction.BUY);
         }
 
-        private void MakeOrder()
+        private void MakeOrder(OrderType orderType, OrderAction orderAction)
         {
-            IBApi.Contract contract = new IBApi.Contract();
-            contract.Symbol = "IBKR";
-            contract.SecType = "STK";
-            contract.Currency = "USD";
-            contract.Exchange = "SMART";
+            Contract contract = new Contract();
+            IBApi.Order order = new IBApi.Order();
 
-            Order order = new Order();
-            order.Action = "BUY";
-            order.OrderType = "MKT";
-            order.TotalQuantity = 1;
-            
+            switch (orderType)
+            {
+                case OrderType.MKT:
+                    
+                    contract.Symbol = "IBKR";
+                    contract.SecType = "STK";
+                    contract.Currency = "USD";
+                    contract.Exchange = "SMART";
+
+                    order.Action = orderAction.ToString();
+                    order.OrderType = "MKT";
+                    order.TotalQuantity = 1;
+                    order.Tif = TimeInForce.GTC.ToString();
+
+                    break;
+
+                case OrderType.LMT:
+                    
+                    contract.Symbol = "IBKR";
+                    contract.SecType = "STK";
+                    contract.Currency = "USD";
+                    contract.Exchange = "SMART";
+
+
+                    order.Action = orderAction.ToString();
+                    order.OrderType = "LMT";
+                    order.LmtPrice = 10;
+                    order.TotalQuantity = 1;
+                    order.Tif = TimeInForce.GTC.ToString();
+                    break;
+            }
+
             manager.SubmitOrder(contract, order);
+        }
+
+        private void btnOrderLimit_Click(object sender, EventArgs e)
+        {
+            MakeOrder(OrderType.LMT, OrderAction.BUY);
+        }
+
+        private void btnOrderMKTShort_Click(object sender, EventArgs e)
+        {
+            MakeOrder(OrderType.MKT, OrderAction.SELL);
+        }
+
+        private void btnOrderLMTShort_Click(object sender, EventArgs e)
+        {
+            MakeOrder(OrderType.LMT, OrderAction.SELL);
+        }
+
+        private void btnTestDB_Click(object sender, EventArgs e)
+        {
+            TestDB();
+        }
+
+        private static void TestDB()
+        {
+            DBUtils.TestDB();
         }
     }
 }

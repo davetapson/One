@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using One.messages;
+using One.db;
 
 namespace One
 {
@@ -16,7 +17,7 @@ namespace One
         private MainGUI mainGUI;
         EClientSocket clientSocket;
 
-        static EWrapperImpl wrapper;
+        static Responder responder;
 
         private int nextOrderNo;
 
@@ -33,6 +34,11 @@ namespace One
         public Manager(GatewayCredentials gatewayCredentials)
         {
             this.gatewayCredentials = gatewayCredentials;
+        }
+
+        internal void GetAccountPosition()
+        {
+            clientSocket.reqPositions();
         }
 
         private void showNextValidId(ConnectionStatusMessage obj)
@@ -65,10 +71,10 @@ namespace One
                 {
                     HandleErrorMessage(new ErrorMessage(-1, -1, "Connecting..."));
 
-                    wrapper = new EWrapperImpl();
+                    responder = new Responder();
 
-                    clientSocket = wrapper.ClientSocket;
-                    EReaderSignal readerSignal = wrapper.Signal;
+                    clientSocket = responder.ClientSocket;
+                    EReaderSignal readerSignal = responder.Signal;
 
                     clientSocket.eConnect(gatewayCredentials.Host, gatewayCredentials.Port, gatewayCredentials.ClientId);
                     
@@ -79,12 +85,12 @@ namespace One
                     new Thread(() => { while (clientSocket.IsConnected()) { readerSignal.waitForSignal();
                                                                                      reader.processMsgs(); } }) { IsBackground = true }.Start();
 
-                    while (wrapper.NextOrderId <= 0)
+                    while (responder.NextOrderId <= 0)
                     {
                         
                     }
 
-                    NextOrderNo = wrapper.NextOrderId;
+                    NextOrderNo = responder.NextOrderId;
 
                     IsConnected = true;
 
@@ -120,6 +126,8 @@ namespace One
         private void HandleErrorMessage(ErrorMessage message)
         {
             mainGUI.AddMessage("Request " + message.RequestId + ", Code: " + message.ErrorCode + " - " + message.Message + "\n");
+
+            DBUtils.SaveErrorMessage(message);
 
            /* if (message.RequestId > MarketDataManager.TICK_ID_BASE && message.RequestId < DeepBookManager.TICK_ID_BASE)
                 marketDataManager.NotifyError(message.RequestId);

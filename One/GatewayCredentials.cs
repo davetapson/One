@@ -40,7 +40,7 @@ namespace One
             // todo - db params
             Host = "127.0.0.1";
             Port = 4002;
-            ClientId = 0;
+            ClientId = 5;
         }
 
         public int ClientId { get; internal set; }
