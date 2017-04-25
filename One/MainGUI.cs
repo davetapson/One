@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IBApi;
 using One.db;
+using One.orders;
+using static One.Common.GlobalValues;
 
 namespace One
 {
@@ -16,10 +18,7 @@ namespace One
     {
         Manager manager;
         GatewayCredentials gatewayCredentials;
-        enum OrderType { MKT, LMT}
-        enum OrderSide { BOT, SLD}
-        enum OrderAction { BUY, SELL, SSHORT}
-        enum TimeInForce { DAY, GTC, IOC, GTD, OPG, FOK, DTC}
+       
 
         public MainGUI()
         {
@@ -67,17 +66,36 @@ namespace One
 
             switch (orderType)
             {
+                case OrderType.MTL:
+
+                    // AUC
+                    contract.Symbol = "IBKR";
+                    contract.SecType = "STK";
+                    contract.Currency = "USD";
+                    contract.Exchange = "SMART";
+
+                    OrderAuction orderAuction = new OrderAuction();
+                    orderAuction.Action = orderAction;
+                    orderAuction.LimitPrice = 10;
+                    orderAuction.Quantity = 1;
+
+                    order = orderAuction.GetOrder;                    
+
+                    break;
                 case OrderType.MKT:
+                    
                     
                     contract.Symbol = "IBKR";
                     contract.SecType = "STK";
                     contract.Currency = "USD";
                     contract.Exchange = "SMART";
 
-                    order.Action = orderAction.ToString();
-                    order.OrderType = "MKT";
-                    order.TotalQuantity = 1;
-                    order.Tif = TimeInForce.GTC.ToString();
+                    OrderMarket orderMarket = new OrderMarket();
+                    orderMarket.Action = orderAction;
+                    orderMarket.Quantity = 1;
+                    orderMarket.TimeInForce = OrderTimeInForce.GTC;
+
+                    order = orderMarket.GetOrder;
 
                     break;
 
@@ -88,12 +106,15 @@ namespace One
                     contract.Currency = "USD";
                     contract.Exchange = "SMART";
 
+                    OrderLimit orderLimit = new OrderLimit();
 
-                    order.Action = orderAction.ToString();
-                    order.OrderType = "LMT";
-                    order.LmtPrice = 10;
-                    order.TotalQuantity = 1;
-                    order.Tif = TimeInForce.GTC.ToString();
+                    orderLimit.Action = orderAction;
+                    orderLimit.LimitPrice = 10;
+                    orderLimit.Quantity = 1;
+                    orderLimit.TimeInForce = OrderTimeInForce.GTC;
+
+                    order = orderLimit.GetOrder;
+
                     break;
             }
 
@@ -123,6 +144,11 @@ namespace One
         private static void TestDB()
         {
             DBUtils.TestDB();
+        }
+
+        private void buttonOrderAUC_Click(object sender, EventArgs e)
+        {
+            MakeOrder(OrderType.MTL, OrderAction.BUY);
         }
     }
 }

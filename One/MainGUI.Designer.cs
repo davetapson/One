@@ -35,6 +35,7 @@
             this.btnOrderMKTShort = new System.Windows.Forms.Button();
             this.btnOrderLMTShort = new System.Windows.Forms.Button();
             this.btnTestDB = new System.Windows.Forms.Button();
+            this.buttonOrderAUC = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -49,7 +50,7 @@
             // 
             // txtMessages
             // 
-            this.txtMessages.Location = new System.Drawing.Point(12, 92);
+            this.txtMessages.Location = new System.Drawing.Point(12, 258);
             this.txtMessages.Multiline = true;
             this.txtMessages.Name = "txtMessages";
             this.txtMessages.Size = new System.Drawing.Size(733, 157);
@@ -105,11 +106,22 @@
             this.btnTestDB.UseVisualStyleBackColor = true;
             this.btnTestDB.Click += new System.EventHandler(this.btnTestDB_Click);
             // 
+            // buttonOrderAUC
+            // 
+            this.buttonOrderAUC.Location = new System.Drawing.Point(93, 70);
+            this.buttonOrderAUC.Name = "buttonOrderAUC";
+            this.buttonOrderAUC.Size = new System.Drawing.Size(75, 23);
+            this.buttonOrderAUC.TabIndex = 7;
+            this.buttonOrderAUC.Text = "Order AUC";
+            this.buttonOrderAUC.UseVisualStyleBackColor = true;
+            this.buttonOrderAUC.Click += new System.EventHandler(this.buttonOrderAUC_Click);
+            // 
             // MainGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(757, 261);
+            this.ClientSize = new System.Drawing.Size(757, 417);
+            this.Controls.Add(this.buttonOrderAUC);
             this.Controls.Add(this.btnTestDB);
             this.Controls.Add(this.btnOrderLMTShort);
             this.Controls.Add(this.btnOrderMKTShort);
@@ -134,6 +146,7 @@
         private System.Windows.Forms.Button btnOrderMKTShort;
         private System.Windows.Forms.Button btnOrderLMTShort;
         private System.Windows.Forms.Button btnTestDB;
+        private System.Windows.Forms.Button buttonOrderAUC;
     }
 }
 

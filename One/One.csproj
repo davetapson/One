@@ -46,8 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\FileLoader.cs" />
     <Compile Include="Common\GlobalValues.cs" />
     <Compile Include="db\DBUtils.cs" />
+    <Compile Include="orders\OrderLimit.cs" />
+    <Compile Include="orders\OrderAuction.cs" />
+    <Compile Include="orders\OrderDiscretionary.cs" />
+    <Compile Include="orders\OrderMarket.cs" />
+    <Compile Include="orders\OrderMarketIfTouched.cs" />
     <Compile Include="Responder.cs" />
     <Compile Include="GatewayCredentials.cs" />
     <Compile Include="IBClient.cs" />
