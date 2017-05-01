@@ -36,6 +36,7 @@
             this.btnOrderLMTShort = new System.Windows.Forms.Button();
             this.btnTestDB = new System.Windows.Forms.Button();
             this.buttonOrderAUC = new System.Windows.Forms.Button();
+            this.btnProcessFiles = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -116,11 +117,22 @@
             this.buttonOrderAUC.UseVisualStyleBackColor = true;
             this.buttonOrderAUC.Click += new System.EventHandler(this.buttonOrderAUC_Click);
             // 
+            // btnProcessFiles
+            // 
+            this.btnProcessFiles.Location = new System.Drawing.Point(358, 12);
+            this.btnProcessFiles.Name = "btnProcessFiles";
+            this.btnProcessFiles.Size = new System.Drawing.Size(75, 23);
+            this.btnProcessFiles.TabIndex = 8;
+            this.btnProcessFiles.Text = "Process Files";
+            this.btnProcessFiles.UseVisualStyleBackColor = true;
+            this.btnProcessFiles.Click += new System.EventHandler(this.btnProcessFiles_Click);
+            // 
             // MainGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(757, 417);
+            this.Controls.Add(this.btnProcessFiles);
             this.Controls.Add(this.buttonOrderAUC);
             this.Controls.Add(this.btnTestDB);
             this.Controls.Add(this.btnOrderLMTShort);
@@ -147,6 +159,7 @@
         private System.Windows.Forms.Button btnOrderLMTShort;
         private System.Windows.Forms.Button btnTestDB;
         private System.Windows.Forms.Button buttonOrderAUC;
+        private System.Windows.Forms.Button btnProcessFiles;
     }
 }
 

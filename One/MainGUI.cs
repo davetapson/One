@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IBApi;
-using One.db;
+using Data;
+
 using One.orders;
-using static One.Common.GlobalValues;
+
+using static Common.GlobalValues;
 
 namespace One
 {
@@ -143,12 +145,17 @@ namespace One
 
         private static void TestDB()
         {
-            DBUtils.TestDB();
+            TestDB();
         }
 
         private void buttonOrderAUC_Click(object sender, EventArgs e)
         {
             MakeOrder(OrderType.MTL, OrderAction.BUY);
+        }
+
+        private void btnProcessFiles_Click(object sender, EventArgs e)
+        {
+            manager.ProcessFiles();
         }
     }
 }

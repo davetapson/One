@@ -52,8 +52,17 @@
   <ItemGroup>
     <Compile Include="LoadOrders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{79FBBCF0-C7FC-4870-98AB-D8F2A2B3EA48}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{58c86bb5-f7f7-4435-a0f5-13cd57164979}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\One\One.csproj">
       <Project>{3d6154a6-a855-4e0b-a7a8-94c79f0db6e7}</Project>
       <Name>One</Name>

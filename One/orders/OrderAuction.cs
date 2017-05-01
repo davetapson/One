@@ -1,5 +1,6 @@
-﻿using IBApi;
-using One.Common;
+﻿using Common;
+using IBApi;
+
 using System;
 
 namespace One.orders

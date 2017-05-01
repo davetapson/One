@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using One.messages;
-using One.db;
+using Data;
+using Data;
+using Common.messages;
 
 namespace One
 {
@@ -177,6 +178,13 @@ namespace One
             ErrorMessage error = new ErrorMessage(id, errorCode, str);
 
             HandleErrorMessage(error);
+        }
+
+        public void ProcessFiles()
+        {
+            OrderManager orderManager = new OrderManager();
+
+            orderManager.CreateOrdersFromTrades(NextOrderNo, clientSocket);
         }
     }
 }

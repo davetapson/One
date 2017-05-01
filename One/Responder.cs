@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using IBApi;
-using One.db;
+using Data;
 
 namespace One
 {
@@ -200,7 +200,7 @@ namespace One
                 ", " + execution.Shares + ", ClientId: " + execution.ClientId + ", OrderRef: " + execution.OrderRef);
 
 
-            db.DBUtils.SaveExecutionDetails(reqId, contract, execution);
+            DBUtils.SaveExecutionDetails(reqId, contract, execution);
         }
 
         public virtual void execDetailsEnd(int reqId)

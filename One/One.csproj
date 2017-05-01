@@ -46,14 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\FileLoader.cs" />
-    <Compile Include="Common\GlobalValues.cs" />
-    <Compile Include="db\DBUtils.cs" />
-    <Compile Include="orders\OrderLimit.cs" />
-    <Compile Include="orders\OrderAuction.cs" />
-    <Compile Include="orders\OrderDiscretionary.cs" />
-    <Compile Include="orders\OrderMarket.cs" />
-    <Compile Include="orders\OrderMarketIfTouched.cs" />
+    <Compile Include="OrderManager.cs" />
+    <Compile Include="Orders\OrderLimit.cs" />
+    <Compile Include="Orders\OrderAuction.cs" />
+    <Compile Include="Orders\OrderDiscretionary.cs" />
+    <Compile Include="Orders\OrderMarket.cs" />
+    <Compile Include="Orders\OrderMarketIfTouched.cs" />
     <Compile Include="Responder.cs" />
     <Compile Include="GatewayCredentials.cs" />
     <Compile Include="IBClient.cs" />
@@ -64,56 +62,6 @@
       <DependentUpon>MainGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Manager.cs" />
-    <Compile Include="messages\AccountDownloadEndMessage.cs" />
-    <Compile Include="messages\AccountSummaryEndMessage.cs" />
-    <Compile Include="messages\AccountSummaryMessage.cs" />
-    <Compile Include="messages\AccountUpdateMultiEndMessage.cs" />
-    <Compile Include="messages\AccountUpdateMultiMessage.cs" />
-    <Compile Include="messages\AccountValueMessage.cs" />
-    <Compile Include="messages\AdvisorDataMessage.cs" />
-    <Compile Include="messages\BondContractDetailsMessage.cs" />
-    <Compile Include="messages\CommissionMessage.cs" />
-    <Compile Include="messages\ConnectionStatusMessage.cs" />
-    <Compile Include="messages\ContractDetailsEndMessage.cs" />
-    <Compile Include="messages\ContractDetailsMessage.cs" />
-    <Compile Include="messages\DeepBookMessage.cs" />
-    <Compile Include="messages\ErrorMessage.cs" />
-    <Compile Include="messages\ExecutionMessage.cs" />
-    <Compile Include="messages\FamilyCodesMessage.cs" />
-    <Compile Include="messages\FundamentalsMessage.cs" />
-    <Compile Include="messages\HeadTimestampMessage.cs" />
-    <Compile Include="messages\HistogramDataMessage.cs" />
-    <Compile Include="messages\HistoricalDataEndMessage.cs" />
-    <Compile Include="messages\HistoricalDataMessage.cs" />
-    <Compile Include="messages\HistoricalNewsEndMessage.cs" />
-    <Compile Include="messages\HistoricalNewsMessage.cs" />
-    <Compile Include="messages\ManagedAccountsMessage.cs" />
-    <Compile Include="messages\MarketDataMessage.cs" />
-    <Compile Include="messages\MarketDataTypeMessage.cs" />
-    <Compile Include="messages\MktDepthExchangesMessage.cs" />
-    <Compile Include="messages\NewsArticleMessage.cs" />
-    <Compile Include="messages\NewsProvidersMessage.cs" />
-    <Compile Include="messages\OpenOrderMessage.cs" />
-    <Compile Include="messages\OrderMessage.cs" />
-    <Compile Include="messages\OrderStatusMessage.cs" />
-    <Compile Include="messages\PositionMessage.cs" />
-    <Compile Include="messages\PositionMultiEndMessage.cs" />
-    <Compile Include="messages\PositionMultiMessage.cs" />
-    <Compile Include="messages\RealTimeBarMessage.cs" />
-    <Compile Include="messages\ScannerEndMessage.cs" />
-    <Compile Include="messages\ScannerMessage.cs" />
-    <Compile Include="messages\ScannerParametersMessage.cs" />
-    <Compile Include="messages\SecurityDefinitionOptionParameterEndMessage.cs" />
-    <Compile Include="messages\SecurityDefinitionOptionParameterMessage.cs" />
-    <Compile Include="messages\SoftDollarTiersMessage.cs" />
-    <Compile Include="messages\SymbolSamplesMessage.cs" />
-    <Compile Include="messages\TickNewsMessage.cs" />
-    <Compile Include="messages\TickOptionMessage.cs" />
-    <Compile Include="messages\TickPriceMessage.cs" />
-    <Compile Include="messages\TickReqParamsMessage.cs" />
-    <Compile Include="messages\TickSizeMessage.cs" />
-    <Compile Include="messages\UpdateAccountTimeMessage.cs" />
-    <Compile Include="messages\UpdatePortfolioMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainGUI.resx">
@@ -145,6 +93,14 @@
     <ProjectReference Include="..\..\..\..\..\TWS API\source\csharpclient\client\CSharpAPI.csproj">
       <Project>{8ede0744-96c2-40b0-a8dc-37df79370203}</Project>
       <Name>CSharpAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{79FBBCF0-C7FC-4870-98AB-D8F2A2B3EA48}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{58c86bb5-f7f7-4435-a0f5-13cd57164979}</Project>
+      <Name>Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
