@@ -20,17 +20,15 @@ namespace One
     {
         Manager manager;
         GatewayCredentials gatewayCredentials;
-       
+        OrderManager orderManager;
+
+
 
         public MainGUI()
         {
             InitializeComponent();
 
-            Text = "One";
-
-            gatewayCredentials = new GatewayCredentials();
-            manager = new Manager(gatewayCredentials, this);
-            Connect();
+            
         }
 
         private void Connect()
@@ -53,7 +51,17 @@ namespace One
 
         private void MainGUI_Load(object sender, EventArgs e)
         {
-            
+            Text = "One";
+
+            gatewayCredentials = new GatewayCredentials();
+            manager = new Manager(gatewayCredentials, this);
+            Connect();
+
+            orderManager = new OrderManager();
+            orderManager.doProcessOrders = true;
+            //orderManager.ProcessOrders(EC);
+
+
         }
 
         private void btnOrder_Click(object sender, EventArgs e)

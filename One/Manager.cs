@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using Data;
-using Data;
 using Common.messages;
 
 namespace One
@@ -20,9 +19,9 @@ namespace One
 
         static Responder responder;
 
-        private int nextOrderNo;
+        private static int nextOrderNo;
 
-        public int NextOrderNo
+        public static int NextOrderNo
         {
             get {
                     nextOrderNo++;
@@ -85,10 +84,18 @@ namespace One
 
                     new Thread(() => { while (clientSocket.IsConnected()) { readerSignal.waitForSignal();
                                                                                      reader.processMsgs(); } }) { IsBackground = true }.Start();
-
+                    int counter = 0;
                     while (responder.NextOrderId <= 0)
                     {
-                        
+                        counter++;
+                        Thread.Sleep(1000);
+
+                        if (counter > 10)
+                        {
+                            HandleErrorMessage(new ErrorMessage(-1, -1, "Failure to Connect."));
+                            IsConnected = false;
+                            return;
+                        }
                     }
 
                     NextOrderNo = responder.NextOrderId;
@@ -183,8 +190,8 @@ namespace One
         public void ProcessFiles()
         {
             OrderManager orderManager = new OrderManager();
-
-            orderManager.CreateOrdersFromTrades(NextOrderNo, clientSocket);
+            orderManager.doProcessOrders = true;
+            orderManager.ProcessOrders(clientSocket);
         }
     }
 }

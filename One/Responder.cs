@@ -41,7 +41,7 @@ namespace One
             //API Error
             Console.WriteLine("Exception thrown: "+e);
             DBUtils.SaveError(e);
-            throw e;
+            //throw e;
         }
         
         public virtual void error(string str)
@@ -164,6 +164,7 @@ namespace One
                 +", AvgFillPrice: "+avgFillPrice+", PermId: "+permId+", ParentId: "+parentId+", LastFillPrice: "+lastFillPrice+", ClientId: "+clientId+", WhyHeld: "+whyHeld);
 
             DBUtils.SaveOrderStatus(orderId, status, filled, remaining, avgFillPrice, permId, parentId, lastFillPrice, clientId, whyHeld);
+            DBUtils.UpdatePlacedOrder(orderId, status, filled, remaining, avgFillPrice, permId, parentId, lastFillPrice, clientId, whyHeld);
         }
 
         public virtual void openOrder(int orderId, Contract contract, Order order, OrderState orderState)
@@ -192,8 +193,6 @@ namespace One
         public virtual void execDetails(int reqId, Contract contract, Execution execution)
         {
             // https://interactivebrokers.github.io/tws-api/classIBApi_1_1Execution.html#gsc.tab=0
-
-            DBUtils.SaveExecutionDetails(reqId, contract, execution);
 
             Console.WriteLine("ExecDetails: ReqId: " + reqId + ", Symbol: " + contract.Symbol + ", SecType: " + 
                 contract.SecType + ", Currency: " + contract.Currency + ", ExecId: " + execution.ExecId + ", OrderId: " + execution.OrderId + 

@@ -1,6 +1,7 @@
 ﻿using Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using static Common.GlobalValues;
 using static Common.TradeTemplates.StockMarketOrder;
@@ -131,7 +132,16 @@ namespace Zero
                 if (index > -1) trade.TimeInForce = (OrderTimeInForce)Enum.Parse(typeof(OrderTimeInForce), values[index].ToString(), true);
 
                 index = Array.IndexOf(headers, "LimitPrice");
-                if (index > -1) trade.LimitPrice = Convert.ToDecimal(values[index]);
+                if (index > -1) trade.LimitPrice = Convert.ToDecimal(values[index], CultureInfo.InvariantCulture);
+
+                index = Array.IndexOf(headers, "AuxPrice");
+                if (index > -1) trade.AuxPrice = Convert.ToDecimal(values[index].ToString(), CultureInfo.InvariantCulture);
+
+                index = Array.IndexOf(headers, "TrailingPercent");
+                if (index > -1) trade.TrailingPercent = Convert.ToDecimal(values[index], CultureInfo.InvariantCulture);
+
+                index = Array.IndexOf(headers, "TrailStopPrice");
+                if (index > -1) trade.TrailStopPrice = Convert.ToDecimal(values[index], CultureInfo.InvariantCulture);
             }
             catch (Exception ex)
             {

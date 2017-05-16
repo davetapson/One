@@ -17,7 +17,7 @@ namespace Common
         public static string TradesFilesExceptionsFolder { get { return tradesFilesExceptionsFolder; } }
 
         public enum ErrorMessageTypes { APIError = 1, UnspecifiedIBError = 2, TWSError = 3, ApplicationError = 4}
-        public enum OrderType {Undefined, LMT, MIT, MKT, MTL}
+        public enum OrderType {Undefined, LMT, MIT, MKT, MOC, MTL, STP, TRAIL }
         public enum OrderSecurityType { Undefined, BOND, CFD, EFP, CASH, FUND, FUT, FOP, OPT, STK, WAR }
         public enum OrderSide { Undefined, BOT, SLD }
         public enum OrderAction { Undefined, BUY, SELL, SSHORT }

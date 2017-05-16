@@ -51,7 +51,7 @@ namespace Data
                         trade.StatusId = Convert.ToInt32(reader["Status_Id"]);
                         trade.StrategyId = Convert.ToInt32(reader["Strategy_Id"]);
                         trade.Symbol = reader["Symbol"].ToString();
-                        trade.TimeInForce = (OrderTimeInForce)Enum.Parse(typeof(OrderTimeInForce), reader["Time_In_Force"].ToString());
+                        if (reader["Time_In_Force"] != null) trade.TimeInForce = (OrderTimeInForce)Enum.Parse(typeof(OrderTimeInForce), reader["Time_In_Force"].ToString());
 
                         unprocessedTrades.Add(trade);
                     }
@@ -134,7 +134,7 @@ namespace Data
             return result;
         }
 
-        public static int SavePlaceOrder(int nextOrderId, Contract contract, Order order, Strategy strategy)
+        public static int SavePlaceOrder(int nextOrderId, Contract contract, Order order)//, Strategy strategy)
         {
             int result = -1;
 
@@ -149,7 +149,7 @@ namespace Data
             try
             {
                 sqlCommand.Parameters.AddWithValue("@orderId", nextOrderId);
-                sqlCommand.Parameters.AddWithValue("@strategy_id", strategy.ID);
+                sqlCommand.Parameters.AddWithValue("@strategy_id", order.ClientId);
                 sqlCommand.Parameters.AddWithValue("@contract_id", contractId);
                 sqlCommand.Parameters.AddWithValue("@order_id", orderId);
                 sqlCommand.Parameters.AddWithValue("@status_id", 9);  // unprocessed
@@ -162,6 +162,42 @@ namespace Data
             {
                 throw;
             }
+        }
+
+        public static int UpdatePlacedOrder(int orderId, string status, double filled, double remaining, double avgFillPrice, int permId, int parentId, double lastFillPrice, int clientId, string whyHeld)
+        {
+            int result = -1;
+
+            try
+            {
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                SqlCommand sqlCommand = new SqlCommand("UpdatePlacedOrder", sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                sqlCommand.Parameters.AddWithValue("@order_id", orderId);
+                sqlCommand.Parameters.AddWithValue("@status_id", 11); // updated
+                sqlCommand.Parameters.AddWithValue("@status", status);
+                sqlCommand.Parameters.AddWithValue("@filled", filled);
+                sqlCommand.Parameters.AddWithValue("@remaining", remaining);
+                sqlCommand.Parameters.AddWithValue("@average_fill_price", avgFillPrice);
+                sqlCommand.Parameters.AddWithValue("@perm_id", permId);
+                sqlCommand.Parameters.AddWithValue("@parent_id", parentId);
+                sqlCommand.Parameters.AddWithValue("@last_filled_price", lastFillPrice);
+                sqlCommand.Parameters.AddWithValue("@client_id", clientId);
+                sqlCommand.Parameters.AddWithValue("@why_held", whyHeld);
+
+                sqlConnection.Open();
+                result = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = "SaveOrderStatus insert failed: " + ex;
+                Console.Write(errorMessage);
+                SaveErrorMessage(errorMessage, GlobalValues.ErrorMessageTypes.ApplicationError);
+            }
+
+            return result; 
         }
 
         public static void SaveOrders(List<OrderMarket> marketOrders)
@@ -193,8 +229,12 @@ namespace Data
                     if (!string.IsNullOrEmpty(trade.Currency)) sqlCommand.Parameters.AddWithValue("@currency", trade.Currency);
                     if (!string.IsNullOrEmpty(trade.Exchange)) sqlCommand.Parameters.AddWithValue("@exchange", trade.Exchange);
                     if (!string.IsNullOrEmpty(trade.PrimaryExchange)) sqlCommand.Parameters.AddWithValue("@primary_exchange", trade.PrimaryExchange);
-                    if (!string.IsNullOrEmpty(trade.TimeInForce.ToString())) sqlCommand.Parameters.AddWithValue("@time_in_force", trade.TimeInForce.ToString());
+                    if (trade.TimeInForce != OrderTimeInForce.Undefined) sqlCommand.Parameters.AddWithValue("@time_in_force", trade.TimeInForce.ToString());
                     if (trade.LimitPrice > 0) sqlCommand.Parameters.AddWithValue("@limit_price", trade.LimitPrice);
+                    if (trade.DiscretionaryAmount > 0) sqlCommand.Parameters.AddWithValue("@discretionary_amount", trade.DiscretionaryAmount);
+                    if (trade.AuxPrice > 0) sqlCommand.Parameters.AddWithValue("@aux_price", trade.AuxPrice);
+                    if(trade.TrailingPercent > 0) sqlCommand.Parameters.AddWithValue("@trailing_percent", trade.TrailingPercent);
+                    if (trade.TrailStopPrice > 0) sqlCommand.Parameters.AddWithValue("@trail_stop_price", trade.TrailStopPrice);
                     sqlCommand.Parameters.AddWithValue("@status_id", 1);
 
                     int result = Convert.ToInt32(sqlCommand.ExecuteScalar());
