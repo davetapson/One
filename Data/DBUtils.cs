@@ -61,6 +61,68 @@ namespace Data
             return unprocessedTrades;
         }
 
+        public static string GetConfigValue(string keyValue)
+        {
+            string value;
+
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+
+            using (var sqlCommand = new SqlCommand("GetConfigValue", sqlConnection))
+            {
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                sqlCommand.Parameters.AddWithValue("@key", keyValue);
+
+                value = sqlCommand.ExecuteScalar().ToString();
+            }
+            sqlConnection.Close();
+
+            return value;
+        }
+
+        public static int GetNextOrderNo()
+        {
+            int NextOrderNo;
+
+            string lastOrderNo = GetConfigValue("NextOrderNo");
+
+            int runningDays = Convert.ToInt32( lastOrderNo.Substring(0, 4));
+
+            if (Common.Utils.GetDateFromRunningDays(runningDays).ToShortDateString() == DateTime.Now.ToShortDateString())
+            {
+                NextOrderNo = Convert.ToInt32(lastOrderNo) + 1;
+                SetConfigValue("NextOrderNo", NextOrderNo.ToString());
+            }
+            else
+            {
+                NextOrderNo = Convert.ToInt32(Common.Utils.GetRunningDaysFromYear(DateTime.Now).ToString() + "0");
+                SetConfigValue("NextOrderNo", NextOrderNo.ToString());
+            }
+
+             return NextOrderNo;
+        }
+
+        public static int SetConfigValue(string key, string value)
+        {
+            int id;
+
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+
+            using (var sqlCommand = new SqlCommand("setConfigValue", sqlConnection))
+            {
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                sqlCommand.Parameters.AddWithValue("@key", key);
+                sqlCommand.Parameters.AddWithValue("@value", value);
+
+                id = Convert.ToInt32(sqlCommand.ExecuteNonQuery());
+            }
+            sqlConnection.Close();
+
+            return id;
+        }
         public static void UpdateTrade(Trade unprocessedTrade, bool success)
         {
             try

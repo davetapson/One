@@ -100,6 +100,7 @@
     <Compile Include="Strategy.cs" />
     <Compile Include="Trade.cs" />
     <Compile Include="TradeTemplates\StockMarketOrder.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\TWS API\source\csharpclient\client\CSharpAPI.csproj">
